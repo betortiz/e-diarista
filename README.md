@@ -37,7 +37,7 @@ cd ediaristas-spring
 Atualize as configurações de acesso ao banco de dados no arquivo
 [application.properties](src/main/resources/application.properties).
 
-```proporties
+```properties
 # Datasource de conexão com o banco de dados
 spring.datasource.url=jdbc:mysql://localhost:3306/ediaristas?useTimezone=true&serverTimezone=UTC
 spring.datasource.username=root
