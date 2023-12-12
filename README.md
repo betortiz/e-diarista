@@ -53,7 +53,7 @@ spring.thymeleaf.cache=false
 
 Execute o servidor imbutido do Tomcat
 
-```bash
+```sh
 mvn spring-boot:run
 ```
 
