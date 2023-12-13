@@ -1,7 +1,5 @@
 # Projeto Backend E-Diaristas em Spring Boot
 
-Adaptação para Spring Boot do projeto realizado durante a imersão Multi Stack da [TreinaWeb](https://treinaweb.com.br/).
-
 ## Dependências de Produção
 
 - Spring Boot
