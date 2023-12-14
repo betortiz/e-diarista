@@ -22,6 +22,7 @@ public class UsuarioController {
     @Autowired
     private WebUsuarioService service;
 
+    // Renderiza a tela de listagem de usuários
     @GetMapping
     public ModelAndView buscarTodos() {
         var modelAndView = new ModelAndView("admin/usuario/lista");
@@ -31,6 +32,8 @@ public class UsuarioController {
         return modelAndView;
     }
 
+
+    // Renderiza a tela de cadastro de usuário
     @GetMapping("/cadastrar")
     public ModelAndView cadastrar() {
         var modelAndView = new ModelAndView("admin/usuario/cadastro-form");
@@ -40,6 +43,7 @@ public class UsuarioController {
         return modelAndView;
     }
 
+    // Cadastra um novo usuário
     @PostMapping("/cadastrar")
     public String cadastrar(@Valid @ModelAttribute("cadastroForm") UsuarioCadastroForm cadastroForm,
             BindingResult result, RedirectAttributes attrs) {
