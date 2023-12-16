@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.treinaweb.ediaristas.core.exceptions.SenhasNaoConferemException;
 import br.com.treinaweb.ediaristas.web.dtos.FlashMessage;
 import br.com.treinaweb.ediaristas.web.dtos.UsuarioCadastroForm;
 import br.com.treinaweb.ediaristas.web.dtos.UsuarioEdicaoForm;
@@ -48,13 +49,17 @@ public class UsuarioController {
     @PostMapping("/cadastrar")
     public String cadastrar(@Valid @ModelAttribute("cadastroForm") UsuarioCadastroForm cadastroForm,
             BindingResult result, RedirectAttributes attrs) {
-        if (result.hasErrors()) {
-            return "admin/usuario/cadastro-form";
+        if (result.hasErrors()) { // Verifica se há erros de validação
+            return "admin/usuario/cadastro-form"; // Retorna para a tela de cadastro
         }
 
-        service.cadastrar(cadastroForm);
-
-        attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário cadastrado com sucesso!"));
+        try {
+            service.cadastrar(cadastroForm); // Cadastra o usuário
+            attrs.addFlashAttribute("alert", new FlashMessage("alert-success", "Usuário cadastrado com sucesso!")); // Adiciona uma mensagem de sucesso
+        } catch (SenhasNaoConferemException e) {
+            result.addError(e.getFieldError()); // Adiciona o erro de validação no BindingResult
+            return "admin/usuario/cadastro-form"; // Retorna para a tela de cadastro
+        }
 
         return "redirect:/admin/usuarios";
     }
@@ -62,10 +67,10 @@ public class UsuarioController {
     // Renderiza a tela de edição de usuário
     @GetMapping("/{id}/editar")
     public ModelAndView editar(@PathVariable Long id) {
-        var modelAndView = new ModelAndView("admin/usuario/edicao-form");
+        var modelAndView = new ModelAndView("admin/usuario/edicao-form"); // Renderiza a tela de edição
 
-        modelAndView.addObject("edicaoForm", service.buscarFormPorId(id));
-
+        modelAndView.addObject("edicaoForm", service.buscarFormPorId(id)); // Busca o usuário pelo ID e adiciona no modelAndView
+        
         return modelAndView;
     }
 
